@@ -13,6 +13,7 @@
 ```bash
 # скачивание проекта
 git clone https://github.com/ups2201/lesson13.git
+git checkout lesson24
 
 #выкачивание пакетов
 npm install
