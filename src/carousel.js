@@ -1,5 +1,16 @@
-export function Carousel() {
-  let slides = document.querySelectorAll("li");
+export function Carousel(carouselElement) {
+  let slides = carouselElement.querySelectorAll("li");
+
+  this.index = 0;
+  this.next = function (deltaIndex) {
+    let currentIndex = this.index + deltaIndex;
+    if (currentIndex >= slides.length) {
+      currentIndex = 0;
+    } else if (currentIndex < 0) {
+      currentIndex = slides.length - 1;
+    }
+    this.index = currentIndex;
+  };
 
   for (let i = 0; i < slides.length; i++) {
     slides.item(i).classList.add("carousel-item");
@@ -17,8 +28,20 @@ export function Carousel() {
   rightArrowElement.classList.add("right-arrow");
   rightArrowElement.innerHTML = `<img src="./images/right_arrow.svg"/>`;
 
-  const ul = document.querySelector("ul");
+  carouselElement.insertBefore(leftArrowElement, carouselElement.firstChild);
+  carouselElement.appendChild(rightArrowElement);
 
-  ul.insertBefore(leftArrowElement, ul.firstChild);
-  ul.appendChild(rightArrowElement);
+  rightArrowElement.addEventListener("click", () => {
+    const activeSlide = carouselElement.querySelector(".active");
+    activeSlide.classList.remove("active");
+    this.next(1);
+    slides.item(this.index).classList.add("active");
+  });
+
+  leftArrowElement.addEventListener("click", () => {
+    const activeSlide = carouselElement.querySelector(".active");
+    activeSlide.classList.remove("active");
+    this.next(-1);
+    slides.item(this.index).classList.add("active");
+  });
 }
