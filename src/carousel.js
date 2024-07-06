@@ -44,4 +44,9 @@ export function Carousel(carouselElement) {
     this.next(-1);
     slides.item(this.index).classList.add("active");
   });
+
+  //автопролистывание
+  setInterval(() => {
+    rightArrowElement.dispatchEvent(new Event("click"));
+  }, 3000);
 }
